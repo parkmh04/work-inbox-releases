@@ -9,6 +9,9 @@
 gh release download --repo parkmh04/work-inbox-releases --pattern '*.dmg'
 ```
 
+## AI에게 설치 맡기기
+회사 맥의 Claude Code나 opencode에 "[SETUP.md](SETUP.md)대로 work-inbox를 설치·설정해 줘"라고 요청하면 됩니다. AI가 지킬 규칙(토큰 출력 금지, 실제 업무 데이터로 시험 금지 등)이 문서 맨 위에 있습니다.
+
 ## 설치
 1. DMG를 열어 `work-inbox.app`을 응용 프로그램 폴더로 옮깁니다.
 2. 처음 열 때 "확인되지 않은 개발자" 경고가 나오면 시스템 설정 → 개인정보 보호 및 보안 → **그래도 열기**를 누릅니다. (공증되지 않은 자체 서명 앱입니다. 회사 관리 맥이 막으면 IT 부서에 문의하세요.)
