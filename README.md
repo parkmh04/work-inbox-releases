@@ -26,7 +26,12 @@ gh release download --repo parkmh04/work-inbox-releases --pattern '*.dmg'
     model:
       billing: company
     ```
-    를 넣고 앱을 다시 시작합니다(1.0.1부터).
+    를 넣고 앱을 다시 시작합니다(1.0.1부터). Claude Code Router(`ccr`)는 `company: { router: ccr }`를 더합니다.
+  - 회사 맥(opencode·사내 모델, 1.1부터): `model: { mode: opencode }`. 자세한 것은 [SETUP.md](SETUP.md).
+
+## 버전
+- **1.1.0-rc1** (시험판): 업로드 형식 확대(Word·Excel·PowerPoint·Numbers 등), 보관함 파일 트리·미리보기, 폴더 올리기, 링크 올리기(1단계 링크), 자연어 설정, opencode 모드, 맥 알림, 분류 색인.
+- 1.0.1: 회사 과금 모드(게이트웨이·ccr).
 
 ## 데이터
 - 모든 자료는 이 맥의 로컬 폴더에만 저장됩니다.
