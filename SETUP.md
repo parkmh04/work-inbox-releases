@@ -69,6 +69,8 @@ ls -l
    ```
    - 이미 최상위 `model:` 키가 있으면 새로 만들지 말고 그 아래에 `billing: company` 한 줄만 들여쓰기로 추가한다 (`model:`이 두 번 나오면 YAML이 깨진다).
    - 들여쓰기는 공백 2칸, 탭 금지.
+   - **전제 확인**: 회사 Claude Code 설정(Bedrock·게이트웨이 환경변수)이 `~/.claude/settings.json`의 `env` 블록에 있어야 한다. 셸에서 `export`로만 설정돼 있으면 Finder로 켠 앱에서는 동작하지 않는다. AI는 이 파일의 **값을 출력하지 말고**, `env` 키가 있는지만 확인한다(예: `python3 -c "import json,os;print('env' in json.load(open(os.path.expanduser('~/.claude/settings.json'))))"`). 없으면 멈추고 사람에게 회사 설정 방법을 묻는다.
+   - 회사 모드에서 앱은 모델을 지정하지 않고 Claude Code가 회사 설정대로 고르게 한다. 특정 모델로 고정하려면 `model:` 아래 `companyModel: <회사에서 쓰는 모델 ID>`를 추가한다.
 3. 확인: `grep -n -A3 '^model:' ~/Library/Application\ Support/work-inbox/config.yaml`
 4. 앱을 다시 실행한다 (`open -a work-inbox`). 설정 화면의 "모델 경로와 과금" 행에서 회사 과금 표시를 확인한다.
 
@@ -92,6 +94,7 @@ ls -l
 | 증상 | 확인 | 조치 |
 |---|---|---|
 | 추출이 "로그인" 오류 (배너 "Claude Code 로그인 필요") | 터미널에서 `claude -p "hello"` | 앱과 같은 사용자 계정에서 Claude Code가 회사 설정으로 응답해야 한다. 안 되면 `~/.claude/settings.json`의 회사 설정(IT 안내값)을 사람이 점검. 비밀값은 AI가 출력하지 않는다. 고친 뒤 보관함 "다시 시도" |
+| "회사 경로에서 구조화 출력 실패" | Claude Code 버전·회사 게이트웨이 지원 | 관리자에게 Claude Code 버전 확인 |
 | "구독 아님" 오류 | `config.yaml`의 `model:` 아래 `billing: company` 유무·들여쓰기 | 설정을 넣거나 고친 뒤 앱 재시작 |
 | 401 (로컬 서버 인증 실패) | 크롬 확장을 쓰는 경우만 해당. 확장 옵션의 토큰 | 앱 설정 화면의 "토큰 복사" 값을 확장 옵션에 다시 붙여넣기. AI는 토큰 파일을 읽어 출력하지 않는다 |
 | 401 (모델 호출, Bedrock 쪽) | `claude -p "hello"` 결과 | 회사 인증 만료일 수 있음. 사람이 회사 방식으로 재인증 |
