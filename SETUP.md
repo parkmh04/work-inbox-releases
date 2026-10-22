@@ -1,6 +1,6 @@
 # work-inbox 1.1 설치·설정 가이드 (회사 맥, AI용)
 
-대상 버전: **1.1** (`v1.1.0-rc1`). 1.0.1에서 올리는 경우는 맨 아래 "1.0.1에서 올릴 때"를 먼저 본다.
+대상 버전: **1.1** (`v1.1.0-rc2`). 1.0.1에서 올리는 경우는 맨 아래 "1.0.1에서 올릴 때"를 먼저 본다.
 
 사용 방법: 회사 맥의 opencode 또는 Claude Code에 "이 문서(`SETUP.md`, https://github.com/parkmh04/work-inbox-releases/blob/main/SETUP.md)대로 work-inbox를 설치·설정해 줘"라고 붙여 넣는다. AI는 아래 규칙을 지키며 단계 순서대로 진행한다.
 
@@ -64,19 +64,19 @@ uname -m                       # arm64 여야 함 (Apple Silicon). x86_64면 멈
 
 ## ② DMG 받기
 
-대상: GitHub 공개 저장소 `parkmh04/work-inbox-releases`의 Release `v1.1.0-rc1`(prerelease), 파일 `work-inbox-1.1.0-rc1-arm64.dmg`.
+대상: GitHub 공개 저장소 `parkmh04/work-inbox-releases`의 Release `v1.1.0-rc2`(prerelease), 파일 `work-inbox-1.1.0-rc2-arm64.dmg`.
 
 **[사람]** `gh` 로그인이 필요하면 사람이 한다: `gh auth login` (브라우저 인증). AI는 토큰을 요구하거나 다루지 않는다.
 
 ```
 gh auth status
 mkdir -p ~/Downloads/work-inbox-dmg && cd ~/Downloads/work-inbox-dmg
-gh release download v1.1.0-rc1 --repo parkmh04/work-inbox-releases --pattern '*.dmg' --pattern 'SHA256SUMS.txt'
+gh release download v1.1.0-rc2 --repo parkmh04/work-inbox-releases --pattern '*.dmg' --pattern 'SHA256SUMS.txt'
 ls -l
 shasum -a 256 -c SHA256SUMS.txt     # OK가 나와야 한다
 ```
 
-`gh`가 없거나 로그인이 어려우면 **[사람]** 브라우저로 저장소 Releases 페이지에서 `v1.1.0-rc1`의 DMG를 `~/Downloads`에 받는다. 공개 저장소라 로그인 없이도 받을 수 있다.
+`gh`가 없거나 로그인이 어려우면 **[사람]** 브라우저로 저장소 Releases 페이지에서 `v1.1.0-rc2`의 DMG를 `~/Downloads`에 받는다. 공개 저장소라 로그인 없이도 받을 수 있다.
 
 ## ③ 설치·첫 실행
 
