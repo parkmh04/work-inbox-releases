@@ -63,10 +63,25 @@ ls -l
 
 1. 앱을 종료한다 (메뉴바 아이콘 → 종료).
 2. 파일이 없으면 만들고, 있으면 **기존 내용을 보존한 채** 아래를 추가한다. 먼저 백업: `cp config.yaml config.yaml.bak` (파일이 있을 때).
-   ```yaml
-   model:
-     billing: company
-   ```
+   - **회사 Claude Code를 `ccr code`(Claude Code Router)로 쓰는 경우(권장 설정)**:
+     ```yaml
+     model:
+       billing: company
+       companyRouter: ccr
+     ```
+     앱이 `~/.claude-code-router/config.json`에서 라우터 주소와 토큰을 자동으로 읽는다(값은 화면·로그에 나오지 않는다). 라우터 서비스가 떠 있어야 하므로 먼저 `ccr status`로 확인하고, 꺼져 있으면 `ccr start`. 설정 파일 구조가 달라(ccr v3 등) "ccr 설정을 찾지 못함" 오류가 나면 사람에게 라우터 주소를 확인받아 아래처럼 직접 지정한다(토큰 값은 사람이 직접 입력, AI는 출력 금지):
+     ```yaml
+     model:
+       billing: company
+       companyEnv:
+         ANTHROPIC_BASE_URL: "http://127.0.0.1:3456"
+         ANTHROPIC_AUTH_TOKEN: "<사람이 입력>"
+     ```
+   - **회사 설정이 `~/.claude/settings.json`의 `env`에 있는 경우(Bedrock·게이트웨이)**:
+     ```yaml
+     model:
+       billing: company
+     ```
    - 이미 최상위 `model:` 키가 있으면 새로 만들지 말고 그 아래에 `billing: company` 한 줄만 들여쓰기로 추가한다 (`model:`이 두 번 나오면 YAML이 깨진다).
    - 들여쓰기는 공백 2칸, 탭 금지.
    - **전제 확인**: 회사 Claude Code 설정(Bedrock·게이트웨이 환경변수)이 `~/.claude/settings.json`의 `env` 블록에 있어야 한다. 셸에서 `export`로만 설정돼 있으면 Finder로 켠 앱에서는 동작하지 않는다. AI는 이 파일의 **값을 출력하지 말고**, `env` 키가 있는지만 확인한다(예: `python3 -c "import json,os;print('env' in json.load(open(os.path.expanduser('~/.claude/settings.json'))))"`). 없으면 멈추고 사람에게 회사 설정 방법을 묻는다.
@@ -95,6 +110,9 @@ ls -l
 |---|---|---|
 | 추출이 "로그인" 오류 (배너 "Claude Code 로그인 필요") | 터미널에서 `claude -p "hello"` | 앱과 같은 사용자 계정에서 Claude Code가 회사 설정으로 응답해야 한다. 안 되면 `~/.claude/settings.json`의 회사 설정(IT 안내값)을 사람이 점검. 비밀값은 AI가 출력하지 않는다. 고친 뒤 보관함 "다시 시도" |
 | "회사 경로에서 구조화 출력 실패" | Claude Code 버전·회사 게이트웨이 지원 | 관리자에게 Claude Code 버전 확인 |
+| "ccr 설정을 찾지 못함" | `ccr status`, `~/.claude-code-router/config.json` 존재 | 라우터 시작 또는 `companyEnv`로 직접 지정 |
+| "개인 로그인으로 잡혔습니다" | 회사 경로가 아닌 개인 Claude 로그인 | `companyRouter`/`companyEnv` 설정 확인, 회사 경로로만 호출되게 |
+| 앱이 설정 오류로 안 뜸 | `config.yaml` 키 오타(예: `biling`) | 키 이름 수정 |
 | "구독 아님" 오류 | `config.yaml`의 `model:` 아래 `billing: company` 유무·들여쓰기 | 설정을 넣거나 고친 뒤 앱 재시작 |
 | 401 (로컬 서버 인증 실패) | 크롬 확장을 쓰는 경우만 해당. 확장 옵션의 토큰 | 앱 설정 화면의 "토큰 복사" 값을 확장 옵션에 다시 붙여넣기. AI는 토큰 파일을 읽어 출력하지 않는다 |
 | 401 (모델 호출, Bedrock 쪽) | `claude -p "hello"` 결과 | 회사 인증 만료일 수 있음. 사람이 회사 방식으로 재인증 |
