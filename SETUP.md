@@ -81,8 +81,11 @@ shasum -a 256 -c SHA256SUMS.txt     # OK가 나와야 한다
 ## ③ 설치·첫 실행
 
 1. DMG를 연다: `open ~/Downloads/work-inbox-dmg/*.dmg` 후 `work-inbox.app`을 `/Applications`로 복사한다 (Finder 드래그 또는 `cp -R "/Volumes/<볼륨 이름>/work-inbox.app" /Applications/`). 다 쓰면 `hdiutil detach "/Volumes/<볼륨 이름>"`.
-2. **[사람]** 첫 실행: Finder에서 `/Applications/work-inbox.app` 우클릭 → 열기. 막히면 시스템 설정 → 개인정보 보호 및 보안 → "그래도 열기"를 사람이 누른다. 이 앱은 자체 서명(ad-hoc)이라 이 경로가 정상이다.
-3. AI는 `xattr -dr com.apple.quarantine /Applications/work-inbox.app`를 쓰기 전에 사용자 확인을 받는다 (보안 설정 성격이므로).
+2. **[사람]** 첫 실행: Finder에서 `/Applications/work-inbox.app`을 더블클릭한다. 공증(notarization)을 받지 않은 앱이라 macOS가 **"Apple은 'work-inbox'에 … 악성 코드가 없음을 확인할 수 없습니다"** 창을 띄우고 열지 않는다. 이것이 정상이며 아래로 연다:
+   - 그 창은 **완료**(또는 취소)로 닫는다(휴지통으로 이동 누르지 말 것).
+   - **시스템 설정 → 개인정보 보호 및 보안** → 아래로 내려 "보안" 칸의 **"'work-inbox'이(가) 차단되었습니다" 옆 [그래도 열기]** → 비밀번호 또는 Touch ID → 다시 뜨는 창에서 **열기**. (macOS 15부터는 우클릭 → 열기로는 넘어가지 않는다.)
+   - 이 버튼은 막힌 직후 약 1시간만 보인다. 안 보이면 앱을 한 번 더 더블클릭한 뒤 다시 본다.
+3. 위 버튼이 없거나 회사 정책으로 숨겨져 있으면: AI는 **사람의 확인을 받은 뒤** `xattr -dr com.apple.quarantine /Applications/work-inbox.app`(다운로드 표시 제거, sudo 불필요)를 실행하고 다시 연다. 사람 확인 없이 하지 않는다.
 4. **MDM·보안 솔루션이 실행을 막으면 멈춘다.** 우회하지 말고 사람에게 "IT 보안팀에 work-inbox.app 허용을 문의하세요"라고 안내한다.
 5. 정상이면 메뉴바에 work-inbox 아이콘이 뜨고 창이 열린다. 확인: `curl -s 127.0.0.1:4823/healthz` (응답이 오면 코어 동작).
 
